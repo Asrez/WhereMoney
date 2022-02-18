@@ -1,10 +1,17 @@
 # WhereMoney
 
+![WhereMoney](AppDemo.png)
+
 WhereMoney client web-application
 
 > Simple, Accountant, Finance, Helper, Personal Accountant
 
 ----
+### Powered by
+
+- TypeScript
+- ReactJS
+- Material-Ui
 
 # Getting Started with Create React App
 
