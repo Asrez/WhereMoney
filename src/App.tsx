@@ -1,11 +1,13 @@
-import React from 'react';
-import './App.css';
+import { Container } from '@mui/material';
+import Transaction from './components/transaction/Transaction';
+import Wallet from './components/wallet/Wallet';
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <Container>
+      <Wallet />
+      <Transaction />
+    </Container>
   );
 }
 
