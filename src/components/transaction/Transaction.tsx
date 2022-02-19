@@ -1,9 +1,10 @@
-import { FormControl, Grid, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+import { Grid, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import useStyles from './styles.js'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
-import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+
 const Transaction: React.FC = () => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
@@ -24,21 +25,21 @@ const Transaction: React.FC = () => {
                     <Typography variant="h5">Your Transaction</Typography>
                 </Grid>
             </Grid>
-            <Grid item md={2}>
+            <Grid item >
                 <Grid container
                     alignItems="center">
-                    <FormControl fullWidth>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={select}
-                            onChange={handleChange}
-                        >
-                            <MenuItem value={'Today'}>Today</MenuItem>
-                            <MenuItem value={'Tomorrow'}>Tomorrow</MenuItem>
-                            <MenuItem value={'Yesterday'}>Yesterday</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={select}
+                        onChange={handleChange}
+                        IconComponent={KeyboardArrowDownIcon}
+                        className={classes.select}
+                    >
+                        <MenuItem value={'Today'}>Today</MenuItem>
+                        <MenuItem value={'Tomorrow'}>Tomorrow</MenuItem>
+                        <MenuItem value={'Yesterday'}>Yesterday</MenuItem>
+                    </Select>
                 </Grid>
             </Grid>
             <Grid item xs={12} >
@@ -46,15 +47,15 @@ const Transaction: React.FC = () => {
                     <Grid container justifyContent="space-between" alignItems="center">
                         <Grid item>
                             <Grid container alignItems="center">
-                                <ArrowUpwardOutlinedIcon className={classes.cardIcon1} />
+                                <ArrowRightAltIcon className={classes.cardIcon1} />
                                 <Grid direction="column">
-                                    <Typography variant="body1" gutterBottom>Tomans 10,000,000</Typography>
-                                    <Typography variant="caption">Reference number <span className={classes.bold}>2193</span> </Typography>
+                                    <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans 2000</span></Typography>
+                                    <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>2193</span> </Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography variant="subtitle2" gutterBottom>2022/10/8</Typography>
+                        <Grid item className={classes.self}>
+                            <Typography variant="subtitle2"  className={classes.date}>2022/10/8</Typography>
                         </Grid>
                     </Grid>
 
@@ -66,18 +67,18 @@ const Transaction: React.FC = () => {
             </Grid>
             <Grid item xs={12} >
                 <Card className={classes.card}>
-                    <Grid container justifyContent="space-between" alignItems="center">
+                    <Grid container justifyContent="space-between" alignItems="center" >
                         <Grid item>
                             <Grid container alignItems="center">
-                                <ArrowDownwardOutlinedIcon className={classes.cardIcon2} />
+                                <ArrowRightAltIcon className={classes.cardIcon2} />
                                 <Grid direction="column">
-                                    <Typography variant="body1" gutterBottom>Tomans 10,000,000</Typography>
-                                    <Typography variant="caption">Reference number <span className={classes.bold}>2193</span> </Typography>
+                                    <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans 2000</span></Typography>
+                                    <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>2193</span> </Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography variant="subtitle2" gutterBottom>2022/10/8</Typography>
+                        <Grid item className={classes.self}>
+                            <Typography variant="subtitle2"  className={classes.date}>2022/10/8</Typography>
                         </Grid>
                     </Grid>
 

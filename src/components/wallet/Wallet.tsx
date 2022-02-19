@@ -18,7 +18,7 @@ const Wallet: React.FC = () => {
                 <Grid container
                     alignItems="center">
                     <AccountBalanceWalletOutlinedIcon className={classes.headerIcon} />
-                    <Typography variant="h5">Your Wallet</Typography>
+                    <Typography variant="h5" >Your Wallet</Typography>
                 </Grid>
             </Grid>
 
@@ -27,7 +27,7 @@ const Wallet: React.FC = () => {
                     justifyContent='flex-end'
                     alignItems="center">
                     <AddIcon className={classes.headerIcon} />
-                    <Typography variant="h5" >Add</Typography>
+                    <Typography variant="body1" className={classes.add} >Add</Typography>
                 </Grid>
 
             </Grid>

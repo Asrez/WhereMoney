@@ -9,15 +9,24 @@ export default makeStyles((theme) => ({
     paddingLeft: "2rem",
     gap: "1rem",
   },
+  add: {
+    fontSize: "14px",
+  },
+
   bold: {
-    fontWeight: "bold",
+    fontSize: "20px",
+    fontWeight: "700",
+    [theme.breakpoints.down("md")]:{
+      fontSize:'14px'
+    }
   },
   headerIcon: {
     paddingRight: ".2rem",
-    fontSize:'2.2rem',
-    [theme.breakpoints.down("md")]:{
-      fontSize:'1.5rem'
-    }
+    fontSize: "1.5rem",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.5rem",
+    },
+    color: "#2c3e50",
   },
   cardIcon1: {
     color: "#0CC6FF",

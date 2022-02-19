@@ -4,7 +4,29 @@ import App from './App';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
-let theme = createTheme({});
+let theme = createTheme({
+  typography: {
+    h5: {
+      fontSize: '18px',
+    },
+  },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: "0 0 16px #eee"
+        }
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: 'black'
+        },
+      }
+    },
+  }
+});
 theme = responsiveFontSizes(theme)
 
 ReactDOM.render(
