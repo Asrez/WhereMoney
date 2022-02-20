@@ -3,7 +3,8 @@ import { Button, Card, Grid, Typography } from '@mui/material'
 import useStyles from './styles'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';import AddIcon from '@mui/icons-material/Add';
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined'; import AddIcon from '@mui/icons-material/Add';
+import Modal from '../Modal';
 const Wallet: React.FC = () => {
     const classes = useStyles()
 
@@ -54,16 +55,14 @@ const Wallet: React.FC = () => {
                 <Grid container
                     justifyContent='flex-end'
                     alignItems="center">
-                    <Button variant="outlined" startIcon={<PaidOutlinedIcon />}>
-                        Add Pay
-                    </Button>
+                    <Modal icon={<PaidOutlinedIcon />} title="Add Pay" vari="outlined">
+                    </Modal>
 
                 </Grid>
             </Grid>
             <Grid item xs={6}>
-                <Button variant="contained" startIcon={<ReceiptOutlinedIcon />}>
-                    Add Receive
-                </Button>
+                <Modal icon={<ReceiptOutlinedIcon />} title="Add Receive" vari="contained">
+                </Modal>
             </Grid>
         </Grid>
 
