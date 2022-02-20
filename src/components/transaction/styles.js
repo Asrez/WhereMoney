@@ -40,13 +40,16 @@ export default makeStyles((theme) => ({
   },
   select: {
     borderRadius: "14px",
-    border: "white",
+    border: "1px solid transparent",
     background: `#fff url(../icons/down.svg) 6px center no-repeat`,
     backgroundSize: "20%",
     boxShadow: "0 0 5px #dfdfdf",
     width: "130px",
+    "&:hover": {
+      border: "1px solid #999",
+    },
     "&.Mui-focused": {
-      border: "1px solid",
+      border: "1px solid #999",
       "& .MuiOutlinedInput-notchedOutline": {
         border: "none",
       },
