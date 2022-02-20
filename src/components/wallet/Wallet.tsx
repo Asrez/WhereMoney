@@ -4,7 +4,7 @@ import useStyles from './styles'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined'; import AddIcon from '@mui/icons-material/Add';
-import Modal from '../Modal';
+import Modal from '../modal/Modal';
 const Wallet: React.FC = () => {
     const classes = useStyles()
 

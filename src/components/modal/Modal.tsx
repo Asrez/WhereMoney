@@ -12,6 +12,9 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Checkbox } from '@mui/material';
 import NumberFormat from 'react-number-format';
+import useStyles from './styles.js'
+import icons from '../../util/icons'
+
 
 interface ParentCompProps {
     title: string;
@@ -20,8 +23,11 @@ interface ParentCompProps {
 }
 
 const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
+    const classes = useStyles()
+
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('income');
+    const [iconSelect, setIconSelect] = React.useState('book');
     const [checked, setChecked] = React.useState(true);
 
     const handleChangeCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +35,9 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
     };
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue((event.target as HTMLInputElement).value);
+    };
+    const handleChangeIconSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIconSelect((event.target as HTMLInputElement).value);
     };
     const handleClickOpen = () => {
         setOpen(true);
@@ -47,6 +56,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
             description: data.get('description'),
             type: data.get('radVal'),
             check: data.get('check'),
+            iconSelect: data.get('iconSelect'),
         });
     };
     return (
@@ -95,7 +105,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                                     onChange={handleChangeCheck} color="primary" />}
                                 label="Calculate in your monthly transactions"
                             />
-                            <FormLabel id="demo-row-radio-buttons-group-label">Type</FormLabel>
+                            <FormLabel  id="demo-row-radio-buttons-group-label">Type</FormLabel>
                             <RadioGroup
                                 row
                                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -110,6 +120,34 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
 
                             </RadioGroup>
                         </FormControl>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="iconSelect"
+                            id="iconSelect"
+                            value={iconSelect}
+                            onChange={handleChangeIconSelect}
+                        >
+                            {icons.map(icon => (
+                                <Radio sx={{
+                                    "&:hover": {
+                                        borderRadius: "0",
+                                        background: 'none',
+                                    },
+                                    ":first-child": {
+                                        paddingLeft: '0rem',
+                                    }
+                                }}
+                                    icon={<icon.icon className={classes.icon} />}
+                                    checkedIcon={<icon.icon className={classes.iconSelected} />}
+                                    value={icon.value}
+                                    disableRipple
+                                />
+                            ))}
+
+                        </RadioGroup>
+
+
 
                         <Button
                             type="submit"
@@ -119,19 +157,6 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                         >
                             Sign In
                         </Button>
-
-                        {/* <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot amount?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid> */}
                     </Box>
                 </DialogContent>
             </Dialog>
