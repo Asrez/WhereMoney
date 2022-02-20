@@ -1,10 +1,10 @@
 # WhereMoney
 
-![WhereMoney](AppDemo.png)
-
 WhereMoney client web-application
 
 > Simple, Accountant, Finance, Helper, Personal Accountant
+
+![WhereMoney](AppDemo.png)
 
 ----
 ### Powered by
