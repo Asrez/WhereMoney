@@ -1,8 +1,7 @@
 import { Grid, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import useStyles from './styles.js'
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'; import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { transaction } from '../../util/index'
 
@@ -28,8 +27,8 @@ const Transaction: React.FC = () => {
             <Grid item sm={6}>
                 <Grid container
                     alignItems="center">
-                    <AccountBalanceWalletOutlinedIcon className={classes.headerIcon} />
-                    <Typography variant="h5">Your Transaction</Typography>
+                    <ReceiptLongOutlinedIcon className={classes.headerIcon} />
+                    <Typography variant="h5">Your Transactions</Typography>
                 </Grid>
             </Grid>
             <Grid item >
