@@ -4,11 +4,18 @@ import useStyles from './styles.js'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { transaction } from '../../util/index'
 
+interface Trans {
+    amount: number;
+    refrence: number;
+    income: boolean;
+    date: string;
+}
 const Transaction: React.FC = () => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
-
+    const [transactions, setTransactions] = useState<Trans[] | []>(transaction);
     const handleChange = (event: SelectChangeEvent<unknown>) => {
         setSelect(event.target.value as string);
     };
@@ -42,52 +49,31 @@ const Transaction: React.FC = () => {
                     </Select>
                 </Grid>
             </Grid>
-            <Grid item xs={12} >
-                <Card className={classes.card}>
-                    <Grid container justifyContent="space-between" alignItems="center">
-                        <Grid item>
-                            <Grid container alignItems="center">
-                                <ArrowRightAltIcon className={classes.cardIcon1} />
-                                <Grid direction="column">
-                                    <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans 2000</span></Typography>
-                                    <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>2193</span> </Typography>
+            {transactions && transactions.map((trans) => (
+                <Grid item xs={12} >
+                    <Card className={classes.card}>
+                        <Grid container justifyContent="space-between" alignItems="center">
+                            <Grid item>
+                                <Grid container alignItems="center">
+                                    <ArrowRightAltIcon className={trans.income ? classes.cardIcon1 : classes.cardIcon2} />
+                                    <Grid direction="column">
+                                        <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans {trans.amount}</span></Typography>
+                                        <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>{trans.refrence}</span> </Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid item className={classes.self}>
-                            <Typography variant="subtitle2"  className={classes.date}>2022/10/8</Typography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid>
-
-                    </Grid>
-
-                </Card>
-            </Grid>
-            <Grid item xs={12} >
-                <Card className={classes.card}>
-                    <Grid container justifyContent="space-between" alignItems="center" >
-                        <Grid item>
-                            <Grid container alignItems="center">
-                                <ArrowRightAltIcon className={classes.cardIcon2} />
-                                <Grid direction="column">
-                                    <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans 2000</span></Typography>
-                                    <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>2193</span> </Typography>
-                                </Grid>
+                            <Grid item className={classes.self}>
+                                <Typography variant="subtitle2" className={classes.date}>{trans.date}</Typography>
                             </Grid>
                         </Grid>
-                        <Grid item className={classes.self}>
-                            <Typography variant="subtitle2"  className={classes.date}>2022/10/8</Typography>
+
+                        <Grid>
+
                         </Grid>
-                    </Grid>
 
-                    <Grid>
-
-                    </Grid>
-
-                </Card>
-            </Grid>
+                    </Card>
+                </Grid>
+            ))}
         </Grid>
     )
 }
