@@ -23,8 +23,18 @@ let theme = createTheme({
         icon: {
           color: 'black'
         },
+        select: {
+          padding: '14px'
+        },
       }
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: "13px",
+        }
+      }
+    }
   }
 });
 theme = responsiveFontSizes(theme)
