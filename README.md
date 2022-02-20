@@ -4,7 +4,7 @@ WhereMoney client web-application
 
 > Simple, Accountant, Finance, Helper, Personal Accountant
 
-![WhereMoney](AppDemo.png)
+![WhereMoney](AppDemo2.png)
 
 ----
 ### Powered by
