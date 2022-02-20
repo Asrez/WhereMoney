@@ -21,7 +21,7 @@ interface ParentCompProps {
 
 const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState('female');
+    const [value, setValue] = React.useState('income');
     const [checked, setChecked] = React.useState(true);
 
     const handleChangeCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +80,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                             autoComplete="current-description"
                         />
                         <NumberFormat required
+                            sx={{ mt: '1rem' }}
                             fullWidth
                             name="amount"
                             label="Amount"
@@ -102,6 +103,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                                 id="radVal"
                                 value={value}
                                 onChange={handleChange}
+                                defaultValue="outcome"
                             >
                                 <FormControlLabel value="income" control={<Radio />} label="Income" />
                                 <FormControlLabel value="outcome" control={<Radio />} label="Outcome" />
