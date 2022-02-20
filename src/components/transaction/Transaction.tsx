@@ -1,5 +1,6 @@
-import { Grid, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+
 import useStyles from './styles.js'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'; import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -48,7 +49,7 @@ const Transaction: React.FC = () => {
                     </Select>
                 </Grid>
             </Grid>
-            {transactions && transactions.map((trans) => (
+            {transactions.length ? transactions.map((trans) => (
                 <Grid item xs={12} >
                     <Card className={classes.card}>
                         <Grid container justifyContent="space-between" alignItems="center">
@@ -72,7 +73,13 @@ const Transaction: React.FC = () => {
 
                     </Card>
                 </Grid>
-            ))}
+            ))
+
+                : <Grid item xs={12} >
+                    <Alert severity="warning" >Sorry you not have any Transaction yet!</Alert>
+                </Grid>
+
+            }
         </Grid>
     )
 }

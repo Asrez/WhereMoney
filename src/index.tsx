@@ -34,6 +34,14 @@ let theme = createTheme({
           fontSize: "13px",
         }
       }
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          justifyContent: 'center'
+        }
+      }
     }
   }
 });
