@@ -4,6 +4,7 @@ WhereMoney client web-application
 
 > Simple, Accountant, Finance, Helper, Personal Accountant
 
+![WhereMoney](AppDemo1.png)
 ![WhereMoney](AppDemo2.png)
 
 ----

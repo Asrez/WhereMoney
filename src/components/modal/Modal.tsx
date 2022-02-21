@@ -65,7 +65,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                 {title}
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -105,7 +105,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                                     onChange={handleChangeCheck} color="primary" />}
                                 label="Calculate in your monthly transactions"
                             />
-                            <FormLabel  id="demo-row-radio-buttons-group-label">Type</FormLabel>
+                            <FormLabel id="demo-row-radio-buttons-group-label">Type</FormLabel>
                             <RadioGroup
                                 row
                                 aria-labelledby="demo-row-radio-buttons-group-label"
