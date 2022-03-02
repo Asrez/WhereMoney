@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
-import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
+import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import useStyles from './styles.js'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'; import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { transaction } from '../../util/index'
-
 interface Trans {
     amount: number;
     refrence: number;
     income: boolean;
     date: string;
 }
+
+let token: string = ''
 const Transaction: React.FC = () => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
@@ -19,6 +21,23 @@ const Transaction: React.FC = () => {
     const handleChange = (event: SelectChangeEvent<unknown>) => {
         setSelect(event.target.value as string);
     };
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            const result = await axios({
+                method: 'post',
+                url: 'http://localhost:8090/auth/login',
+                data: {
+                    username: 'admin',
+                    password: 'wheremoneyapp@admin_123456'
+                }
+            });
+            token = result.data.token
+            const trans = await axios.get('http://localhost:8090/api/v1/transaction', { headers: { 'Authorization': `Bearer ${token}` } })
+        }
+        fetchTransactions()
+    }, [])
+
+
     return (
         <Grid container
             justifyContent="space-between"
