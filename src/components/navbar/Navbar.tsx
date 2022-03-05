@@ -14,7 +14,7 @@ export default function ButtonAppBar() {
                             WhereMoney
                         </Link>
                     </Typography>
-                    <Link color="inherit" to='/signup' style={{ textDecoration: 'none',color:'white' }}>SignUp</Link>
+                    <Link color="inherit" to='/signin' style={{ textDecoration: 'none',color:'white' }}>Sign In</Link>
                 </Toolbar>
             </AppBar>
         </Box>
