@@ -11,13 +11,23 @@ interface Trans {
     refrence: number;
     income: boolean;
     date: string;
+
+    account_number: string,
+    calculate_in_monthly: boolean,
+    description: string,
+    destination: string,
+    id: number,
+    is_income: true,
+    price: number,
+    source: string,
+    created_date:string
 }
 
 let token: string = ''
 const Transaction: React.FC = () => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
-    const [transactions, setTransactions] = useState<Trans[] | []>(transaction);
+    const [transactions, setTransactions] = useState<Trans[] | []>([]);
     const handleChange = (event: SelectChangeEvent<unknown>) => {
         setSelect(event.target.value as string);
     };
@@ -33,6 +43,8 @@ const Transaction: React.FC = () => {
             });
             token = result.data.token
             const trans = await axios.get('http://localhost:8090/api/v1/transaction', { headers: { 'Authorization': `Bearer ${token}` } })
+            setTransactions(trans.data)
+            console.log(trans.data)
         }
         fetchTransactions()
     }, [])
@@ -74,15 +86,15 @@ const Transaction: React.FC = () => {
                         <Grid container justifyContent="space-between" alignItems="center">
                             <Grid item>
                                 <Grid container alignItems="center">
-                                    <ArrowRightAltIcon className={trans.income ? classes.cardIcon1 : classes.cardIcon2} />
+                                    <ArrowRightAltIcon className={trans.is_income ? classes.cardIcon1 : classes.cardIcon2} />
                                     <Grid direction="column">
-                                        <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans {trans.amount}</span></Typography>
-                                        <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>{trans.refrence}</span> </Typography>
+                                        <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans {trans.price}</span></Typography>
+                                        <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>{trans.account_number}</span> </Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item className={classes.self}>
-                                <Typography variant="subtitle2" className={classes.date}>{trans.date}</Typography>
+                                <Typography variant="subtitle2" className={classes.date}>{trans.created_date}</Typography>
                             </Grid>
                         </Grid>
 

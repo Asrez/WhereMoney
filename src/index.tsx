@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { BrowserRouter } from 'react-router-dom';
 
 let theme = createTheme({
   typography: {
@@ -51,8 +52,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
 
   </React.StrictMode>,
