@@ -1,11 +1,28 @@
-import React from 'react'
-import { Button, Card, Grid, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Card, Grid, Typography } from '@mui/material'
 import useStyles from './styles'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined'; import AddIcon from '@mui/icons-material/Add';
 import Modal from '../modal/Modal';
-const Wallet: React.FC = () => {
+import { Token, Balance } from '../../util/types'
+import axios from 'axios'
+
+const Wallet: React.FC<Token> = ({ token }) => {
+    const [balance, setBalance] = useState<Balance>({
+        total_income: 0,
+        balance: 0
+    })
+
+    useEffect(() => {
+        const fetchBalance = async () => {
+            const balancee = await axios.get('http://localhost:8090/api/v1/transaction/balance', { headers: { 'Authorization': `Bearer ${token}` } })
+            setBalance(balancee.data)
+        }
+        fetchBalance()
+    }, [token])
+
+
     const classes = useStyles()
 
     return (
@@ -36,7 +53,7 @@ const Wallet: React.FC = () => {
                 <Card className={classes.card}>
                     <AccountBalanceWalletOutlinedIcon className={classes.cardIcon2} />
                     <Grid container direction="column">
-                        <Typography variant="body1" className={classes.bold}>Tomans 10,000,000</Typography>
+                        <Typography variant="body1" className={classes.bold}>Tomans {balance.total_income}</Typography>
                         <Typography variant="caption">Total harvests this month</Typography>
                     </Grid>
 
@@ -46,7 +63,7 @@ const Wallet: React.FC = () => {
                 <Card className={classes.card}>
                     <AccountBalanceWalletOutlinedIcon className={classes.cardIcon1} />
                     <Grid container direction="column">
-                        <Typography variant="body1" className={classes.bold}>Tomans 10,000,000</Typography>
+                        <Typography variant="body1" className={classes.bold}>Tomans {balance.balance}</Typography>
                         <Typography variant="caption">Wallet balance</Typography>
                     </Grid>
                 </Card>

@@ -4,7 +4,7 @@ import App from './App';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
-
+import { CookiesProvider } from 'react-cookie';
 let theme = createTheme({
   typography: {
     h5: {
@@ -53,7 +53,9 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </BrowserRouter>
     </ThemeProvider>
 

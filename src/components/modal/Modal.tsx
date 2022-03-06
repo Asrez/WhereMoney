@@ -142,6 +142,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                                     checkedIcon={<icon.icon className={classes.iconSelected} />}
                                     value={icon.value}
                                     disableRipple
+                                    key={icon.id}
                                 />
                             ))}
 

@@ -1,35 +1,40 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
+import { Alert } from '@mui/material';
 
 const theme = createTheme();
 
-export default function SignIn() {
+interface Login {
+    login: (username: string, password: string, check: string) => Promise<void>;
+    error: boolean
+}
+
+const SignIn: React.FC<Login> = ({ login, error }) => {
+
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+
+        login(data.get('username') as string, data.get('password') as string, data.get('check') as string)
+
     };
+
 
     return (
         <ThemeProvider theme={theme}>
+            {error ? <Alert severity="error">Wrong username or password!</Alert> : null}
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -51,10 +56,10 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                         />
                         <TextField
@@ -68,7 +73,8 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox name="check"
+                                color="primary" />}
                             label="Remember me"
                         />
                         <Button
@@ -86,7 +92,7 @@ export default function SignIn() {
                                 </Link>
                             </Grid> */}
                             <Grid item>
-                                <Link to="/signup"  style={{ textDecoration: 'none',color:'#1976D2' }}>
+                                <Link to="/signup" style={{ textDecoration: 'none', color: '#1976D2' }}>
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -97,3 +103,5 @@ export default function SignIn() {
         </ThemeProvider>
     );
 }
+
+export default SignIn

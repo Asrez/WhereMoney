@@ -5,26 +5,11 @@ import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography } fr
 import useStyles from './styles.js'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'; import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import { transaction } from '../../util/index'
-interface Trans {
-    amount: number;
-    refrence: number;
-    income: boolean;
-    date: string;
+import { Token, Trans } from '../../util/types'
 
-    account_number: string,
-    calculate_in_monthly: boolean,
-    description: string,
-    destination: string,
-    id: number,
-    is_income: true,
-    price: number,
-    source: string,
-    created_date:string
-}
 
-let token: string = ''
-const Transaction: React.FC = () => {
+
+const Transaction: React.FC<Token> = ({ token }) => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
     const [transactions, setTransactions] = useState<Trans[] | []>([]);
@@ -33,21 +18,12 @@ const Transaction: React.FC = () => {
     };
     useEffect(() => {
         const fetchTransactions = async () => {
-            const result = await axios({
-                method: 'post',
-                url: 'http://localhost:8090/auth/login',
-                data: {
-                    username: 'admin',
-                    password: 'wheremoneyapp@admin_123456'
-                }
-            });
-            token = result.data.token
+
             const trans = await axios.get('http://localhost:8090/api/v1/transaction', { headers: { 'Authorization': `Bearer ${token}` } })
             setTransactions(trans.data)
-            console.log(trans.data)
         }
         fetchTransactions()
-    }, [])
+    }, [token])
 
 
     return (
@@ -81,13 +57,13 @@ const Transaction: React.FC = () => {
                 </Grid>
             </Grid>
             {transactions.length ? transactions.map((trans) => (
-                <Grid item xs={12} >
+                <Grid item xs={12} key={trans.id} >
                     <Card className={classes.card}>
                         <Grid container justifyContent="space-between" alignItems="center">
                             <Grid item>
                                 <Grid container alignItems="center">
                                     <ArrowRightAltIcon className={trans.is_income ? classes.cardIcon1 : classes.cardIcon2} />
-                                    <Grid direction="column">
+                                    <Grid>
                                         <Typography variant="body1" gutterBottom className={classes.key}>Deposit the amount of <span className={classes.val}>Tomans {trans.price}</span></Typography>
                                         <Typography variant="body1" className={classes.key}>Reference number <span className={classes.val}>{trans.account_number}</span> </Typography>
                                     </Grid>

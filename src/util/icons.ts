@@ -6,12 +6,12 @@ import { ReactComponent as Taxi2 } from "../assets/taxi2.svg";
 import { ReactComponent as Tshirt } from "../assets/tshirt.svg";
 
 const icons = [
-  { icon: Book, value: "book" },
-  { icon: Dice, value: "Dice" },
-  { icon: File, value: "File" },
-  { icon: Suitcase, value: "Suitcase" },
-  { icon: Taxi2, value: "Taxi2" },
-  { icon: Tshirt, value: "Tshirt" },
+  { id:1, icon: Book, value: "book" },
+  { id:2, icon: Dice, value: "Dice" },
+  { id:3, icon: File, value: "File" },
+  { id:4, icon: Suitcase, value: "Suitcase" },
+  { id:5, icon: Taxi2, value: "Taxi2" },
+  { id:6, icon: Tshirt, value: "Tshirt" },
 ];
 
 export default icons;

@@ -25,3 +25,8 @@ export const transaction = [
     date: date.toISOString().split("T")[0],
   },
 ];
+
+export function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
