@@ -72,13 +72,13 @@ const Wallet: React.FC<Token> = ({ token }) => {
                 <Grid container
                     justifyContent='flex-end'
                     alignItems="center">
-                    <Modal icon={<PaidOutlinedIcon />} title="Add Pay" vari="outlined">
+                    <Modal icon={<PaidOutlinedIcon />} title="Add Pay" vari="outlined" token={token}>
                     </Modal>
 
                 </Grid>
             </Grid>
             <Grid item xs={6}>
-                <Modal icon={<ReceiptOutlinedIcon />} title="Add Receive" vari="contained">
+                <Modal icon={<ReceiptOutlinedIcon />} title="Add Receive" vari="contained" token={token}>
                 </Modal>
             </Grid>
         </Grid>

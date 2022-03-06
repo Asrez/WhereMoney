@@ -100,7 +100,7 @@ function App() {
             </Route>
             {!auth && <>
               <Route path='/signin' element={<Signin login={login} error={error} />} />
-              <Route path='/signup' element={<Signup />} />
+              <Route path='/signup' element={<Signup token={user.token} />} />
             </>
             }
             <Route path='/not-found' element={<NotFound />} />

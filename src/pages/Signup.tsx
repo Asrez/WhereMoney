@@ -9,20 +9,48 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import React from 'react';
 
+interface Sign {
+  email: string
+  firstName: string
+  lastName: string
+  password: string
+  username: string
+}
 
 
 const theme = createTheme();
 
-export default function SignUp() {
+const SignUp: React.FC<{ token: string }> = ({ token }) => {
+  console.log(token)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const sign = async ({ email, firstName, lastName, password, username }: Sign) => {
+      await axios({
+        method: 'post',
+        url: 'http://localhost:8090/api/v1/user',
+        data: {
+          email,
+          family_name: lastName,
+          name: firstName,
+          password,
+          username,
+        },
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+    }
+
+    const form = {
+      email: data.get('email') as string,
+      firstName: data.get('firstName') as string,
+      lastName: data.get('lastName') as string,
+      password: data.get('password') as string,
+      username: data.get('username') as string,
+    }
+    sign({ ...form })
   };
 
   return (
@@ -70,6 +98,16 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
@@ -94,12 +132,12 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            >   
+            >
               Sign Up
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link to='/signin'   style={{ textDecoration: 'none',color:'#1976D2' }}>
+                <Link to='/signin' style={{ textDecoration: 'none', color: '#1976D2' }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -110,3 +148,5 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+export default SignUp

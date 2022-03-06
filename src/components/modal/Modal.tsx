@@ -10,25 +10,38 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { Checkbox } from '@mui/material';
+import { Alert, Checkbox } from '@mui/material';
 import NumberFormat from 'react-number-format';
 import useStyles from './styles.js'
 import icons from '../../util/icons'
+import axios from 'axios';
 
 
 interface ParentCompProps {
     title: string;
     icon: JSX.Element;
-    vari: "outlined" | "contained"
+    vari: "outlined" | "contained";
+    token: string
 }
 
-const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
+interface Trans {
+    account_number?: string,
+    calculate_in_monthly: boolean,
+    description?: string,
+    destination?: string,
+    is_income: boolean,
+    price: number,
+    source?: string
+}
+
+const Modal: React.FC<ParentCompProps> = ({ title, icon, vari, token }) => {
     const classes = useStyles()
 
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState('income');
+    const [value, setValue] = React.useState(title === 'Add Pay' ? 'outcome' : 'income');
     const [iconSelect, setIconSelect] = React.useState('book');
     const [checked, setChecked] = React.useState(true);
+    const [error, setError] = React.useState(false);
 
     const handleChangeCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -50,14 +63,30 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
-        console.log({
-            name: data.get('name'),
-            amount: data.get('amount') && parseFloat((data.get('amount') as string).replace(/,/g, '')),
-            description: data.get('description'),
-            type: data.get('radVal'),
-            check: data.get('check'),
-            iconSelect: data.get('iconSelect'),
-        });
+        const addTrans = async ({ calculate_in_monthly, description, is_income, price }: Trans) => {
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8090/api/v1/transaction',
+                data: {
+                    calculate_in_monthly,
+                    description,
+                    is_income,
+                    price,
+                },
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then(() => { setOpen(false) })
+                .catch(() => { setError(true) })
+        }
+        const form = {
+            // name: data.get('name'),
+            price: (data.get('amount') && parseFloat((data.get('amount') as string).replace(/,/g, ''))) as number,
+            description: data.get('description') as string,
+            is_income: data.get('radVal') === 'income' ? true : false,
+            calculate_in_monthly: data.get('check') !== null ? true : false,
+            // iconSelect: data.get('iconSelect'),
+        }
+        addTrans({ ...form })
+
     };
     return (
         <div>
@@ -67,6 +96,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
+                    {error ? <Alert severity="error">Wrong Input</Alert> : null}
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -156,7 +186,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari }) => {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Submit
                         </Button>
                     </Box>
                 </DialogContent>
