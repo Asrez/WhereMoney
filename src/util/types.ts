@@ -33,3 +33,22 @@ export interface Balance {
   total_outcome?: number;
   balance: number;
 }
+
+export interface SignComponenet {
+  signup: ({
+    email,
+    firstName,
+    lastName,
+    password,
+    username,
+  }: Sign) => Promise<void>;
+  error: boolean;
+}
+
+export interface Sign {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  username: string;
+}

@@ -9,15 +9,18 @@ import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import NotFound from './pages/notfound/NotFound';
 import axios from 'axios'
-import { User } from './util/types';
+import { Sign, User } from './util/types';
 import { useCookies } from 'react-cookie';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import LoadingOverlay from 'react-loading-overlay';
 
+
+
 function App() {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState<User>({ username: '', token: '' })
-  const [error, setError] = useState(false);
+  const [signinError, setSigninError] = useState(false);
+  const [signupError, setSignupError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
@@ -74,12 +77,30 @@ function App() {
         }
         navigate('/')
       })
-      .catch(() => { setError(true) })
+      .catch(() => { setSigninError(true) })
 
   }
 
-
-
+  const signup = async ({ email, firstName, lastName, password, username }: Sign) => {
+    await axios({
+      method: 'post',
+      url: 'http://localhost:8090/api/v1/user',
+      data: {
+        email,
+        family_name: lastName,
+        name: firstName,
+        password,
+        username,
+      },
+    }).then((user) => {
+      setUser({ username: user.data.username as string, token: '' })
+      setAuth(true)
+      navigate('/')
+    })
+      .catch(() => {
+        setSignupError(true)
+      })
+  }
 
   return <>
 
@@ -99,8 +120,8 @@ function App() {
               <Route path='/' element={<Home token={user.token} />} />
             </Route>
             {!auth && <>
-              <Route path='/signin' element={<Signin login={login} error={error} />} />
-              <Route path='/signup' element={<Signup token={user.token} />} />
+              <Route path='/signin' element={<Signin login={login} error={signinError} />} />
+              <Route path='/signup' element={<Signup signup={signup} error={signupError} />} />
             </>
             }
             <Route path='/not-found' element={<NotFound />} />

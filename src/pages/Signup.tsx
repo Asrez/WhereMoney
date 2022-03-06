@@ -9,39 +9,20 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
 import React from 'react';
-
-interface Sign {
-  email: string
-  firstName: string
-  lastName: string
-  password: string
-  username: string
-}
+import { Alert } from '@mui/material';
+import { SignComponenet } from '../util/types';
 
 
 const theme = createTheme();
 
-const SignUp: React.FC<{ token: string }> = ({ token }) => {
-  console.log(token)
+const SignUp: React.FC<SignComponenet> = ({ error, signup }) => {
+
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const sign = async ({ email, firstName, lastName, password, username }: Sign) => {
-      await axios({
-        method: 'post',
-        url: 'http://localhost:8090/api/v1/user',
-        data: {
-          email,
-          family_name: lastName,
-          name: firstName,
-          password,
-          username,
-        },
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
-    }
+
 
     const form = {
       email: data.get('email') as string,
@@ -50,11 +31,12 @@ const SignUp: React.FC<{ token: string }> = ({ token }) => {
       password: data.get('password') as string,
       username: data.get('username') as string,
     }
-    sign({ ...form })
+    signup({ ...form })
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {error ? <Alert severity="error">Wrong Input</Alert> : null}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
