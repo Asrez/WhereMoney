@@ -12,7 +12,7 @@ WhereMoney client web-application
 
 - TypeScript
 - ReactJS
-- Material-Ui
+- Material-UI
 
 # Getting Started with Create React App
 
