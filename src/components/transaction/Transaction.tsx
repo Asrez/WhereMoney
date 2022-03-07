@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography, Stack, Pagination } from '@mui/material'
+import { Grid, Alert, Card, MenuItem, Select, SelectChangeEvent, Typography, Button } from '@mui/material'
 import useStyles from './styles.js'
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'; import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -13,10 +13,13 @@ const Transaction: React.FC<Token> = ({ token }) => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
     const [transactions, setTransactions] = useState<Trans[] | []>([]);
-    const [page, setPage] = useState(1);
-    const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value);
-    };
+    const [nextTransactions, setNextTransactions] = useState(true);
+    const [page, setPage] = useState(0);
+
+
+    const handleLoad = () => {
+        setPage(prevState => prevState + 1)
+    }
 
     const handleChange = (event: SelectChangeEvent<unknown>) => {
         setSelect(event.target.value as string);
@@ -25,10 +28,23 @@ const Transaction: React.FC<Token> = ({ token }) => {
         const fetchTransactions = async () => {
 
             const trans = await axios.get(`http://localhost:8090/api/v1/transaction?page=${page}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-            setTransactions(trans.data)
+            const nextTrans = await axios.get(`http://localhost:8090/api/v1/transaction?page=${page + 1}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+            setTransactions(oldArr => [...oldArr, ...trans.data])
+            nextTrans.data.length ? setNextTransactions(true) : setNextTransactions(false)
         }
         fetchTransactions()
-    }, [token, page])
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page])
+    useEffect(() => {
+        const fetchTransactions = async () => {
+
+            const trans = await axios.get(`http://localhost:8090/api/v1/transaction?page=0&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+            setTransactions(trans.data)
+
+        }
+        fetchTransactions()
+    }, [token])
 
     return (
         <>
@@ -94,9 +110,10 @@ const Transaction: React.FC<Token> = ({ token }) => {
                 }
             </Grid>
             <Grid container justifyContent="center" alignItems="center" sx={{ marginTop: '2rem' }}  >
-                <Stack spacing={2}>
+                {/* <Stack spacing={2}>
                     <Pagination count={10} page={page} color="primary" onChange={handleChangePage} />
-                </Stack>
+                </Stack> */}
+                <Button disabled={!nextTransactions} onClick={handleLoad}>Load More</Button>
             </Grid>
         </>
 
