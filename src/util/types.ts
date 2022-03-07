@@ -20,7 +20,7 @@ export interface Trans {
   is_income: true;
   price: number;
   source: string;
-  created_date: string;
+  created_date: Date;
 }
 
 export interface User {
@@ -51,4 +51,9 @@ export interface Sign {
   lastName: string;
   password: string;
   username: string;
+}
+
+export interface Login {
+  login: (username: string, password: string, check: string) => Promise<void>;
+  error: boolean;
 }
