@@ -58,7 +58,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari, token }) => {
                     console.log(error.config);
                 }))
         }
-        fetchIcons()
+        token!==''&&fetchIcons()
     }, [token])
 
     const handleChangeCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,7 +187,7 @@ const Modal: React.FC<ParentCompProps> = ({ title, icon, vari, token }) => {
                                         borderRadius: "0",
                                         background: 'none',
                                     },
-                                    ":first-child": {
+                                    ":first-of-type": {
                                         paddingLeft: '0rem',
                                     }
                                 }}

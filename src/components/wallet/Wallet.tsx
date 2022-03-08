@@ -33,7 +33,7 @@ const Wallet: React.FC<Token> = ({ token }) => {
                     console.log(error.config);
                 }))
         }
-        fetchBalance()
+        token!==''&&fetchBalance()
     }, [token])
 
 

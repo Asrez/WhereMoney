@@ -13,7 +13,7 @@ const Transaction: React.FC<Token> = ({ token }) => {
     const classes = useStyles()
     const [select, setSelect] = useState('Today');
     const [transactions, setTransactions] = useState<Trans[] | []>([]);
-    const [nextTransactions, setNextTransactions] = useState(true);
+    const [nextTransactions, setNextTransactions] = useState(false);
     const [page, setPage] = useState(0);
 
 
@@ -28,7 +28,7 @@ const Transaction: React.FC<Token> = ({ token }) => {
         const fetchTransactions = async () => {
 
             await axios.get(`http://localhost:8090/api/v1/transaction?page=${page}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-                .then((res) => {
+                .then(res => {
                     setTransactions(oldArr => [...oldArr, ...res.data])
                 })
                 .catch((error => {
@@ -43,7 +43,7 @@ const Transaction: React.FC<Token> = ({ token }) => {
                     console.log(error.config);
                 }))
             await axios.get(`http://localhost:8090/api/v1/transaction?page=${page + 1}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-                .then((res) => {
+                .then(res => {
                     res.data.length ? setNextTransactions(true) : setNextTransactions(false)
 
                 })
@@ -60,20 +60,39 @@ const Transaction: React.FC<Token> = ({ token }) => {
                 }))
 
         }
-        fetchTransactions()
+        token !== '' && fetchTransactions()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
     useEffect(() => {
         const fetchTransactions = async () => {
 
-            const trans = await axios.get(`http://localhost:8090/api/v1/transaction?page=0&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-            setTransactions(trans.data)
+            await axios.get(`http://localhost:8090/api/v1/transaction?page=0&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then(res => {
+                    setTransactions(res.data)
+                })
+
+            await axios.get(`http://localhost:8090/api/v1/transaction?page=1&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then(res => {
+                    res.data.length && setNextTransactions(true)
+
+                })
+                .catch((error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                }))
 
         }
-        fetchTransactions()
+        token !== '' && fetchTransactions()
     }, [token])
-
+    console.table(transactions)
     return (
         <>
             <Grid container

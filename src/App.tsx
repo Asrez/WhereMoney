@@ -12,7 +12,6 @@ import axios from 'axios'
 import { Sign, User } from './util/types';
 import { useCookies } from 'react-cookie';
 import ProtectedRoutes from './components/ProtectedRoutes';
-import LoadingOverlay from 'react-loading-overlay';
 
 
 
@@ -116,13 +115,7 @@ function App() {
   return <>
 
     {loading ?
-      <LoadingOverlay
-        active={loading}
-        spinner
-      >
-        <div style={{ height: '100vh' }}>
-        </div>
-      </LoadingOverlay>
+      null
       : <>
         <Navbar username={user.username} handleLogout={handleLogout} />
         <Container style={{ paddingTop: '4rem' }}  >
