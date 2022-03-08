@@ -27,10 +27,38 @@ const Transaction: React.FC<Token> = ({ token }) => {
     useEffect(() => {
         const fetchTransactions = async () => {
 
-            const trans = await axios.get(`http://localhost:8090/api/v1/transaction?page=${page}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-            const nextTrans = await axios.get(`http://localhost:8090/api/v1/transaction?page=${page + 1}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
-            setTransactions(oldArr => [...oldArr, ...trans.data])
-            nextTrans.data.length ? setNextTransactions(true) : setNextTransactions(false)
+            await axios.get(`http://localhost:8090/api/v1/transaction?page=${page}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((res) => {
+                    setTransactions(oldArr => [...oldArr, ...res.data])
+                })
+                .catch((error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                }))
+            await axios.get(`http://localhost:8090/api/v1/transaction?page=${page + 1}&sort_by=createdDate&sort_dir=desc`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((res) => {
+                    res.data.length ? setNextTransactions(true) : setNextTransactions(false)
+
+                })
+                .catch((error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                }))
+
         }
         fetchTransactions()
 

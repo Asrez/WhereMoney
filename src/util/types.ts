@@ -12,15 +12,16 @@ export interface Auth {
 }
 
 export interface Trans {
-  account_number: string;
+  account_number?: string;
   calculate_in_monthly: boolean;
-  description: string;
-  destination: string;
-  id: number;
-  is_income: true;
+  description?: string;
+  destination?: string;
+  id?: number;
+  is_income: boolean;
   price: number;
-  source: string;
-  created_date: Date;
+  source?: string;
+  created_date?: Date;
+  type_id: number;
 }
 
 export interface User {
@@ -56,4 +57,17 @@ export interface Sign {
 export interface Login {
   login: (username: string, password: string, check: string) => Promise<void>;
   error: boolean;
+}
+
+export interface ParentCompProps {
+  title: string;
+  icon: JSX.Element;
+  vari: "outlined" | "contained";
+  token: string;
+}
+
+export interface Icon {
+  id?: number;
+  icon_name: string;
+  name: string;
 }

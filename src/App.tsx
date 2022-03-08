@@ -26,7 +26,7 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
   useEffect(() => {
     const login = async () => {
-      axios({
+      await axios({
         method: 'post',
         url: 'http://localhost:8090/auth/login',
         data: {
@@ -39,6 +39,17 @@ function App() {
           setLoading(false)
           setUser(user.data)
         })
+        .catch((error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+          } else {
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        }))
     }
     if (cookies.username && cookies.password) {
 

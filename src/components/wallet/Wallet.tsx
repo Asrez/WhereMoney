@@ -16,8 +16,22 @@ const Wallet: React.FC<Token> = ({ token }) => {
 
     useEffect(() => {
         const fetchBalance = async () => {
-            const balancee = await axios.get('http://localhost:8090/api/v1/transaction/balance', { headers: { 'Authorization': `Bearer ${token}` } })
-            setBalance(balancee.data)
+            await axios.get('http://localhost:8090/api/v1/transaction/balance', { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((res) => {
+
+                    setBalance(res.data)
+                })
+                .catch((error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                }))
         }
         fetchBalance()
     }, [token])
